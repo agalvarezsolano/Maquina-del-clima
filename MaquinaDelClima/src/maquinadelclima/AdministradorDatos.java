@@ -30,7 +30,11 @@ import javax.swing.JOptionPane;
 
 public class AdministradorDatos {
     
-    String fecha = getFechaActual();
+    public static String fecha = getFechaActual();
+
+    public static String getFecha() {
+        return fecha;
+    }
     String hora = getHoraActual();
     String ruta =  "C:\\Datos del invernadero";
     String rutaC1 = ruta + "\\Datos predeterminados.txt";
@@ -220,10 +224,10 @@ public class AdministradorDatos {
             try{
                 FileWriter fw = new FileWriter(datosActuales, true);
                 BufferedWriter bw = new BufferedWriter(fw);
-                bw.append("\r\n");
                 bw.write(datos);
+                bw.append("\r\n");
                 bw.close();
-                
+
 
             }catch (IOException ex){
                 JOptionPane.showMessageDialog(null,"Error al guardar datos");
@@ -235,6 +239,11 @@ public class AdministradorDatos {
         }
 
         
+    }
+
+    void actualizarFecha() {
+        fecha = getFechaActual();
+        this.rutaC3 = this.rutaC2 + "\\" + fecha + ".txt";
     }
     
 }

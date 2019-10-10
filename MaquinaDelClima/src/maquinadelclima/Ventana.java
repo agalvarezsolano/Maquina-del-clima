@@ -69,6 +69,7 @@ public class Ventana extends javax.swing.JFrame {
                         TInternaValor.setText(im.temp + " *C");
                         HInternaValor.setText(im.hum + "%"); 
                         verificar();
+                        revisarFecha();
                         revisarHora();
                     }
                 }catch(SerialPortException | ArduinoException ex){
@@ -124,6 +125,17 @@ public class Ventana extends javax.swing.JFrame {
                 }
             }
         }
+
+        private void revisarFecha() {
+            String fechaActual = ad.getFecha();
+            ad.actualizarFecha();
+            String fechaNueva = ad.getFecha();
+            if(fechaActual.equals(fechaNueva)){
+            }else{
+                ad.CrearDatosDiarios();
+            }
+        }
+            
     };
 
     private void verificar() throws ArduinoException {
