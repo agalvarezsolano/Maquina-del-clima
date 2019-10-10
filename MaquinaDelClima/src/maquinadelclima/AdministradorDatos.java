@@ -19,6 +19,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,12 +29,13 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class AdministradorDatos {
+    
     String fecha = getFechaActual();
     String hora = getHoraActual();
     String ruta =  "C:\\Datos del invernadero";
     String rutaC1 = ruta + "\\Datos predeterminados.txt";
     String rutaC2 = ruta + "\\Datos Diarios";
-    String rutaC3 =  rutaC2 + "\\" + fecha + hora + ".txt";
+    String rutaC3 =  rutaC2 + "\\" + fecha + ".txt";
     
     public int VerficarCarpetaPrincipal(){
         File carpetaPrincipal= new File(ruta);
@@ -102,7 +104,7 @@ public class AdministradorDatos {
     
     public void CrearDatosDiarios() {
         
-        File datosDiarios= new File(rutaC3);
+        File datosDiarios = new File(rutaC3);
         
         if(datosDiarios.exists()){
             JOptionPane.showMessageDialog(null,"El archivo ya existe");
@@ -126,13 +128,22 @@ public class AdministradorDatos {
     return fecha1;
     }
     
-    public static String getHoraActual() {
-    DateFormat horaFormato = new SimpleDateFormat("HH:mm:ss");
-    String hora = horaFormato.toString();
-    return hora;
+    public String getHoraActual() {
+    LocalDateTime locaDate = LocalDateTime.now();
+    int hours  = locaDate.getHour();
+    int minutes = locaDate.getMinute();
+    
+    if (minutes < 10){
+        String hora = (hours  + ":"+ "0" + minutes); 
+        return hora;
+    }
+    else{
+        String hora = (hours  + ":"+ minutes); 
+        return hora;
+    }
     }
 
-    public void ActualizarDatosPredeterminados(DatosPredeterminados pd) throws IOException {
+    public void ActualizarDatosPredeterminados(Datos pd) throws IOException {
         
         File datosPredeterminados= new File(rutaC1);
 
@@ -157,9 +168,9 @@ public class AdministradorDatos {
         }
     }
     
-    public DatosPredeterminados ObtenerPredeterminados() throws FileNotFoundException, IOException{
+    public Datos ObtenerPredeterminados() throws FileNotFoundException, IOException{
         File datosPredeterminados = new File(rutaC1);
-        DatosPredeterminados pd = new DatosPredeterminados();
+        Datos pd = new Datos();
         
         if(datosPredeterminados.exists()){
             StringTokenizer tokens;
@@ -195,6 +206,35 @@ public class AdministradorDatos {
             
             return pd;
         }
+    }
+    
+    public void guardarDatos(Datos ac)
+    {
+        File datosActuales = new File(rutaC3);
+        String horaGuardar = getHoraActual();
+        
+        if(datosActuales.exists()){
+            
+            String datos = (  horaGuardar + " | Luz |" + ac.luzMax + "| Humedad |" + ac.humMax + "| Temperatura |" + ac.tempMax +"| " + '\n' ) ; 
+        
+            try{
+                FileWriter fw = new FileWriter(datosActuales, true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                bw.append("\r\n");
+                bw.write(datos);
+                bw.close();
+                
+
+            }catch (IOException ex){
+                JOptionPane.showMessageDialog(null,"Error al guardar datos");
+            }
+                    
+        }else{
+            JOptionPane.showMessageDialog(null,"No existen archivo de datos diarios");
+          
+        }
+
+        
     }
     
 }

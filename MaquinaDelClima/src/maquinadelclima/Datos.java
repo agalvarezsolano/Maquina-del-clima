@@ -9,7 +9,7 @@ package maquinadelclima;
  *
  * @author AGAS
  */
-public class DatosPredeterminados {
+public class Datos {
     
     String luzMin = "";
     String tempMin = "";
