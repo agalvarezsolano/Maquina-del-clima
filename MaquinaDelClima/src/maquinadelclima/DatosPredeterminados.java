@@ -5,18 +5,17 @@
  */
 package maquinadelclima;
 
-
 /**
  *
  * @author AGAS
  */
-public class MaquinaDelClima {
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Ventana.main(args);
-    }
-           
+public class DatosPredeterminados {
+    
+    String luzMin = "";
+    String tempMin = "";
+    String humMin = "";
+    String luzMax = "";
+    String tempMax = "";
+    String humMax = "";
+    
 }
