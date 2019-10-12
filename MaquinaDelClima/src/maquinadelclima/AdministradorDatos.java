@@ -117,6 +117,18 @@ public class AdministradorDatos {
         }else{
             try {
                 datosDiarios.createNewFile();
+                try{
+                    String datos = ("Datos Diarios: ");
+                    FileWriter fw = new FileWriter(datosDiarios);
+                    BufferedWriter bw = new BufferedWriter(fw);
+                    bw.write(datos);
+                    bw.append("\r\n");
+                    bw.close();
+
+            }catch (IOException ex){
+                JOptionPane.showMessageDialog(null,"Error al crear datos diarios");
+            }
+                
             } catch (IOException ex) {
                 Logger.getLogger(AdministradorDatos.class.getName()).log(Level.SEVERE, null, ex);
             }

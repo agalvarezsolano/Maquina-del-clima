@@ -91,7 +91,7 @@ public class Ventana extends javax.swing.JFrame {
             datos.luzMax = im.luz;
             
             
-            if(minutosActual == 00){
+            if(minutosActual == 00 && segundosActual == 0){
                 ad.guardarDatos(datos);
             }
             else{
@@ -147,7 +147,7 @@ public class Ventana extends javax.swing.JFrame {
         
         if(valor_Luz > valor_Luz_Pre_Max){
             try {
-                   ArduinoMotor.sendData("0");
+                   ArduinoMotor.sendData("1");
                } catch (SerialPortException ex) {
                    Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
                }
@@ -159,7 +159,7 @@ public class Ventana extends javax.swing.JFrame {
                }
         }else{
             try {
-                   ArduinoMotor.sendData("1");
+                   ArduinoMotor.sendData("2");
                } catch (SerialPortException ex) {
                    Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
                }
@@ -269,6 +269,7 @@ public class Ventana extends javax.swing.JFrame {
         DireccionTexto = new javax.swing.JLabel();
         VelocidadValor = new javax.swing.JTextField();
         DireccionValor = new javax.swing.JTextField();
+        botonGraficar = new javax.swing.JButton();
         ConexionArduino = new javax.swing.JPanel();
         PuertoSensores = new javax.swing.JComboBox<>();
         SensoresTexto = new javax.swing.JLabel();
@@ -387,6 +388,13 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        botonGraficar.setText("Hacer gráfica");
+        botonGraficar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGraficarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout DatosLayout = new javax.swing.GroupLayout(Datos);
         Datos.setLayout(DatosLayout);
         DatosLayout.setHorizontalGroup(
@@ -394,6 +402,7 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(DatosLayout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(botonGraficar)
                     .addComponent(HInternaTexto)
                     .addComponent(HInternaValor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(VientoTexto)
@@ -457,7 +466,9 @@ public class Ventana extends javax.swing.JFrame {
                 .addComponent(LuminocidadTexto)
                 .addGap(5, 5, 5)
                 .addComponent(LuzValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(264, 264, 264))
+                .addGap(120, 120, 120)
+                .addComponent(botonGraficar)
+                .addGap(119, 119, 119))
         );
 
         jTabbedPane1.addTab("Datos", Datos);
@@ -943,6 +954,11 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_horaGuardarActionPerformed
 
+    private void botonGraficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGraficarActionPerformed
+        VentanaGrafica vg = new VentanaGrafica();
+        vg.setVisible(true);
+    }//GEN-LAST:event_botonGraficarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1030,6 +1046,7 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel VelocidadTexto;
     private javax.swing.JTextField VelocidadValor;
     private javax.swing.JLabel VientoTexto;
+    private javax.swing.JButton botonGraficar;
     public javax.swing.JLabel etiquetaHora;
     public javax.swing.JComboBox<String> horaGuardar;
     private javax.swing.JFileChooser jFileChooser1;

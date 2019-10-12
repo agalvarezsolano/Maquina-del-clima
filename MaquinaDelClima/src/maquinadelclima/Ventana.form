@@ -98,6 +98,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="63" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="botonGraficar" min="-2" max="-2" attributes="0"/>
                           <Component id="HInternaTexto" min="-2" max="-2" attributes="0"/>
                           <Component id="HInternaValor" alignment="0" min="-2" pref="59" max="-2" attributes="0"/>
                           <Component id="VientoTexto" min="-2" max="-2" attributes="0"/>
@@ -173,7 +174,9 @@
                       <Component id="LuminocidadTexto" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       <Component id="LuzValor" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="264" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="120" max="-2" attributes="0"/>
+                      <Component id="botonGraficar" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -295,6 +298,14 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DireccionValorActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="botonGraficar">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Hacer gr&#xe1;fica"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonGraficarActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
