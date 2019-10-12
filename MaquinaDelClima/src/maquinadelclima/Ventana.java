@@ -135,7 +135,11 @@ public class Ventana extends javax.swing.JFrame {
         int valor_Luz = Integer.parseInt(im.luz);
         int valor_Luz_Pre_Min = Integer.parseInt(pd.luzMin);
         int valor_Luz_Pre_Max = Integer.parseInt(pd.luzMax);
-        
+        int valor_Temp = Integer.parseInt(im.temp);
+        int valor_Temp_Pre_Min = Integer.parseInt(pd.tempMin);
+        int valor_Temp_Pre_Max = Integer.parseInt(pd.tempMax);
+        //int valor_Temp_Exterior;
+        /*Señal para manejo de motores segun la luz */
         if(valor_Luz > valor_Luz_Pre_Max){
             try {
                    ArduinoMotor.sendData("1");
@@ -151,6 +155,33 @@ public class Ventana extends javax.swing.JFrame {
         }else{
             try {
                    ArduinoMotor.sendData("2");
+               } catch (SerialPortException ex) {
+                   Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+               }
+        }
+        
+        /*Señal para manejo de motores segun la temperatura */
+        if(valor_Temp> valor_Temp_Pre_Max){
+            try {
+                   ArduinoMotor.sendData("3");
+               } catch (SerialPortException ex) {
+                   Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+               }
+        } /*else if (valor_Temp> valor_Temp_Pre_Max && valor_Temp > valor_Temp_Exterior){
+            try {
+                   ArduinoMotor.sendData("4");
+               } catch (SerialPortException ex) {
+                   Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+               }
+        }*/else if (valor_Temp < valor_Temp_Pre_Min){
+            try {
+                   ArduinoMotor.sendData("5");
+               } catch (SerialPortException ex) {
+                   Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+               }
+        }else if(valor_Temp_Pre_Max> valor_Temp && valor_Temp > valor_Temp_Pre_Min){
+            try {
+                   ArduinoMotor.sendData("6");
                } catch (SerialPortException ex) {
                    Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
                }
