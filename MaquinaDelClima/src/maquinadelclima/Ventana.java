@@ -16,20 +16,11 @@ package maquinadelclima;
 
 import com.panamahitek.ArduinoException;
 import com.panamahitek.PanamaHitek_Arduino;
-import com.sun.org.apache.xpath.internal.axes.SelfIteratorNoPredicate;
 import java.awt.Color;
-import java.awt.FileDialog;
-import java.awt.Frame;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
@@ -96,7 +87,7 @@ public class Ventana extends javax.swing.JFrame {
             }
             else{
                 if(minutosGuardar == 1 || minutosGuardar == 3){
-                    if(minutosActual == 45 || minutosActual == 30 || minutosActual == 15 && segundosActual == 0){
+                    if(segundosActual == 0 && (minutosActual == 45 || minutosActual == 30 || minutosActual == 15)){
                         ad.guardarDatos(datos);
 
                     }else{}

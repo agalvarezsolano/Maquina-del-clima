@@ -40,6 +40,8 @@ public class VentanaGrafica extends javax.swing.JFrame {
     String ruta = "";
     DatosGrafica dg = new DatosGrafica();
     JFreeChart  grafica;
+    String nombre = "";
+    String fecha = "";
     
     public VentanaGrafica() {
         initComponents();       
@@ -224,6 +226,7 @@ public class VentanaGrafica extends javax.swing.JFrame {
             File fichero=fc.getSelectedFile();
 
             //Ecribe la ruta del fichero seleccionado en el campo de texto
+            fecha = fichero.getName();
             ruta = fichero.getAbsolutePath();
             etiquetaRuta.setText(ruta);
             etiquetaRevidando.setText("Revisando...");
@@ -252,7 +255,7 @@ public class VentanaGrafica extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(VentanaGrafica.class.getName()).log(Level.SEVERE, null, ex);
         }
-        String nombre = "";
+        
         switch(tipoDeDatos.getSelectedIndex()){
             case 0:
                 nombre = "Temperatura";
@@ -277,16 +280,33 @@ public class VentanaGrafica extends javax.swing.JFrame {
     }//GEN-LAST:event_botonGraficarActionPerformed
 
     private void botonGuardarGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarGraficaActionPerformed
-        int width = 800;
-        int height = 600;
-       File lineChart = new File("Grafico de " + "" + ".jpeg");
-        try {
-            ChartUtilities.saveChartAsJPEG(lineChart, grafica, width,height);
-        } catch (IOException ex) {
-            Logger.getLogger(VentanaGrafica.class.getName()).log(Level.SEVERE, null, ex);
+        //Creamos el objeto JFileChooser
+        JFileChooser fc=new JFileChooser();
+        //Indicamos lo que podemos seleccionar
+        fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        //Creamos el filtro
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("*.JPEG", "jpeg");
+ 
+        //Le indicamos el filtro
+        fc.setFileFilter(filtro);
+        //Abrimos la ventana, guardamos la opcion seleccionada por el usuario
+        int seleccion = fc.showOpenDialog(jFileChooser1);
+        //Si el usuario, pincha en aceptar
+        if(seleccion==JFileChooser.APPROVE_OPTION){
+            //Seleccionamos el fichero
+            File fichero=fc.getSelectedFile();
+            String ubicacion = fichero.getAbsolutePath();
+            int width = 800;
+            int height = 600;
+           File lineChart = new File(ubicacion + "\\"+"Grafico de " + nombre + " "+ fecha+".jpeg");
+            try {
+                ChartUtilities.saveChartAsJPEG(lineChart, grafica, width,height);
+            } catch (IOException ex) {
+                Logger.getLogger(VentanaGrafica.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            System.out.println("Grafica guardada");
         }
         
-        System.out.println("Grafica guardada");
     }//GEN-LAST:event_botonGuardarGraficaActionPerformed
     
     public void crearGrafica(DefaultCategoryDataset datos, String nombre) { 
