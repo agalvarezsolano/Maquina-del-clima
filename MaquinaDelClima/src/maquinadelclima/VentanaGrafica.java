@@ -7,11 +7,9 @@ package maquinadelclima;
 
 import java.io.File;
 import java.io.IOException;
-import java.rmi.dgc.DGC;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartFrame;

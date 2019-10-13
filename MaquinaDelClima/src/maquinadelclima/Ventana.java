@@ -38,7 +38,7 @@ public class Ventana extends javax.swing.JFrame {
     InterpreteMensaje im = new InterpreteMensaje();
     AdministradorDatos ad = new AdministradorDatos();
     Datos pd = new Datos();
-    
+    int modoManual = 0;
     
     public Ventana() throws IOException{
         initComponents();
@@ -59,15 +59,19 @@ public class Ventana extends javax.swing.JFrame {
                         LuzValor.setText(im.luz + "%");
                         TInternaValor.setText(im.temp + " *C");
                         HInternaValor.setText(im.hum + "%"); 
-                        verificar();
-                        revisarFecha();
-                        revisarHora();
+                        if(modoManual == 1){
+                            verificar();
+                        }
+                            revisarFecha();
+                            revisarHora();
                     }
                 }catch(SerialPortException | ArduinoException ex){
                     Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE,null, ex);
-                }
+                
+                
+            }
         }
-
+        
         private void revisarHora() {
             LocalDateTime locaDate = LocalDateTime.now();
             String hora = ad.getHoraActual();
@@ -292,6 +296,7 @@ public class Ventana extends javax.swing.JFrame {
         VelocidadValor = new javax.swing.JTextField();
         DireccionValor = new javax.swing.JTextField();
         botonGraficar = new javax.swing.JButton();
+        botonGuardarDatos = new javax.swing.JButton();
         ConexionArduino = new javax.swing.JPanel();
         PuertoSensores = new javax.swing.JComboBox<>();
         SensoresTexto = new javax.swing.JLabel();
@@ -302,6 +307,23 @@ public class Ventana extends javax.swing.JFrame {
         Luz = new javax.swing.JLabel();
         Temp = new javax.swing.JLabel();
         Motores = new javax.swing.JPanel();
+        botonModoManual = new javax.swing.JButton();
+        botonAutomatico = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        botonAbrirC = new javax.swing.JButton();
+        botonCerrarC = new javax.swing.JButton();
+        botonAbrirVen = new javax.swing.JButton();
+        botonCerrarVen = new javax.swing.JButton();
+        botonAbrirR = new javax.swing.JButton();
+        botonCerrarR = new javax.swing.JButton();
+        botonAbrirVS = new javax.swing.JButton();
+        botonCerrarVS = new javax.swing.JButton();
+        botonCerrarVL = new javax.swing.JButton();
+        botonAbrirVL = new javax.swing.JButton();
         Configuracion = new javax.swing.JPanel();
         ValoresPTexto = new javax.swing.JLabel();
         PreTempText = new javax.swing.JLabel();
@@ -417,6 +439,14 @@ public class Ventana extends javax.swing.JFrame {
             }
         });
 
+        botonGuardarDatos.setText("Guardar datos");
+        botonGuardarDatos.setEnabled(false);
+        botonGuardarDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarDatosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout DatosLayout = new javax.swing.GroupLayout(Datos);
         Datos.setLayout(DatosLayout);
         DatosLayout.setHorizontalGroup(
@@ -424,7 +454,10 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(DatosLayout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(botonGraficar)
+                    .addGroup(DatosLayout.createSequentialGroup()
+                        .addComponent(botonGraficar)
+                        .addGap(18, 18, 18)
+                        .addComponent(botonGuardarDatos))
                     .addComponent(HInternaTexto)
                     .addComponent(HInternaValor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(VientoTexto)
@@ -447,7 +480,7 @@ public class Ventana extends javax.swing.JFrame {
                             .addComponent(TExternaValor, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TExternaTexto)
                             .addComponent(HExternaTexto))))
-                .addContainerGap(991, Short.MAX_VALUE))
+                .addContainerGap(906, Short.MAX_VALUE))
         );
         DatosLayout.setVerticalGroup(
             DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -489,7 +522,9 @@ public class Ventana extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(LuzValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(120, 120, 120)
-                .addComponent(botonGraficar)
+                .addGroup(DatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonGraficar)
+                    .addComponent(botonGuardarDatos))
                 .addGap(119, 119, 119))
         );
 
@@ -578,16 +613,213 @@ public class Ventana extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Conexión Arduino", ConexionArduino);
 
+        botonModoManual.setText("Modo Manual");
+        botonModoManual.setEnabled(false);
+        botonModoManual.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModoManualActionPerformed(evt);
+            }
+        });
+
+        botonAutomatico.setText("Modo Automatico");
+        botonAutomatico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAutomaticoActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel4.setText("Cortinas");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel5.setText("Ventiladores");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel6.setText("Riego");
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel7.setText("Ventana Lateral");
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel8.setText("Ventana Superior");
+
+        botonAbrirC.setText("Abrir");
+        botonAbrirC.setName("Activar"); // NOI18N
+        botonAbrirC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAbrirCActionPerformed(evt);
+            }
+        });
+
+        botonCerrarC.setText("Cerrar");
+        botonCerrarC.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarCActionPerformed(evt);
+            }
+        });
+
+        botonAbrirVen.setText("Abrir");
+        botonAbrirVen.setName("Activar"); // NOI18N
+        botonAbrirVen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAbrirVenActionPerformed(evt);
+            }
+        });
+
+        botonCerrarVen.setText("Cerrar");
+        botonCerrarVen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarVenActionPerformed(evt);
+            }
+        });
+
+        botonAbrirR.setText("Abrir");
+        botonAbrirR.setName("Activar"); // NOI18N
+        botonAbrirR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAbrirRActionPerformed(evt);
+            }
+        });
+
+        botonCerrarR.setText("Cerrar");
+        botonCerrarR.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarRActionPerformed(evt);
+            }
+        });
+
+        botonAbrirVS.setText("Abrir");
+        botonAbrirVS.setName("Activar"); // NOI18N
+        botonAbrirVS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAbrirVSActionPerformed(evt);
+            }
+        });
+
+        botonCerrarVS.setText("Cerrar");
+        botonCerrarVS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarVSActionPerformed(evt);
+            }
+        });
+
+        botonCerrarVL.setText("Cerrar");
+        botonCerrarVL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCerrarVLActionPerformed(evt);
+            }
+        });
+
+        botonAbrirVL.setText("Abrir");
+        botonAbrirVL.setName("Activar"); // NOI18N
+        botonAbrirVL.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAbrirVLActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout MotoresLayout = new javax.swing.GroupLayout(Motores);
         Motores.setLayout(MotoresLayout);
         MotoresLayout.setHorizontalGroup(
             MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1209, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MotoresLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(botonAutomatico)
+                .addGap(18, 18, 18)
+                .addComponent(botonModoManual)
+                .addGap(27, 27, 27))
+            .addGroup(MotoresLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(MotoresLayout.createSequentialGroup()
+                        .addComponent(botonAbrirR)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonCerrarR))
+                    .addGroup(MotoresLayout.createSequentialGroup()
+                        .addComponent(botonAbrirVS)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(botonCerrarVS))
+                    .addGroup(MotoresLayout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(jLabel6)
+                        .addGap(137, 137, 137)
+                        .addComponent(jLabel7))
+                    .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(MotoresLayout.createSequentialGroup()
+                            .addComponent(botonAbrirVL)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(botonCerrarVL))
+                        .addGroup(MotoresLayout.createSequentialGroup()
+                            .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(MotoresLayout.createSequentialGroup()
+                                    .addComponent(botonAbrirC)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(botonCerrarC))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, MotoresLayout.createSequentialGroup()
+                                    .addGap(40, 40, 40)
+                                    .addComponent(jLabel4)))
+                            .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(MotoresLayout.createSequentialGroup()
+                                    .addGap(59, 59, 59)
+                                    .addComponent(botonAbrirVen)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(botonCerrarVen))
+                                .addGroup(MotoresLayout.createSequentialGroup()
+                                    .addGap(88, 88, 88)
+                                    .addComponent(jLabel5)))))
+                    .addGroup(MotoresLayout.createSequentialGroup()
+                        .addGap(11, 11, 11)
+                        .addComponent(jLabel8)))
+                .addContainerGap(811, Short.MAX_VALUE))
         );
         MotoresLayout.setVerticalGroup(
             MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MotoresLayout.createSequentialGroup()
+                .addGap(54, 54, 54)
+                .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(MotoresLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonAbrirC)
+                            .addComponent(botonCerrarC)))
+                    .addGroup(MotoresLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonAbrirVen)
+                            .addComponent(botonCerrarVen))))
+                .addGap(25, 25, 25)
+                .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(MotoresLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonAbrirR)
+                            .addComponent(botonCerrarR)))
+                    .addGroup(MotoresLayout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(botonAbrirVL)
+                            .addComponent(botonCerrarVL))))
+                .addGap(33, 33, 33)
+                .addComponent(jLabel8)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonAbrirVS)
+                    .addComponent(botonCerrarVS))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                .addGroup(MotoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(botonModoManual)
+                    .addComponent(botonAutomatico))
+                .addContainerGap())
         );
+
+        botonAbrirC.getAccessibleContext().setAccessibleName("Activar");
+        botonAbrirVen.getAccessibleContext().setAccessibleName("Activar");
+        botonAbrirR.getAccessibleContext().setAccessibleName("Activar");
+        botonAbrirVS.getAccessibleContext().setAccessibleName("Activar");
 
         jTabbedPane1.addTab("Motores", Motores);
 
@@ -806,9 +1038,9 @@ public class Ventana extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(Mensaje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(etiquetaHora)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel3)
@@ -848,6 +1080,7 @@ public class Ventana extends javax.swing.JFrame {
                 Conexion.setText("Conectar");
                 cv.enableConnectionPanel(Actualizar, PuertoMotor, PuertoSensores);
                 Mensaje.setText("Sin conexión");
+                cv.disableButton(botonGuardarDatos);
             } catch (Exception ex) {
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -859,6 +1092,7 @@ public class Ventana extends javax.swing.JFrame {
                 Mensaje.setText(Mensaje.getText() + "A.Sensores: " + PuertoSensores.getSelectedItem().toString() + "; ");
                 Conexion.setText("Desconectar");
                 cv.disableConnectionPanel(Actualizar, PuertoMotor, PuertoSensores);
+                cv.enableButton(botonGuardarDatos);
             } catch (Exception ex) {
                 Mensaje.setText(Mensaje.getText() + "A.Sensores: " +  "No conectado.");
                 Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
@@ -868,6 +1102,7 @@ public class Ventana extends javax.swing.JFrame {
                 ArduinoMotor.arduinoTX(PuertoMotor.getSelectedItem().toString(), 9600);
                 Conexion.setText("Desconectar");
                 cv.disableConnectionPanel(Actualizar, PuertoMotor, PuertoSensores);
+                cv.enableButton(botonGuardarDatos);
                 Mensaje.setText(Mensaje.getText() + "A.Motores: " +  PuertoMotor.getSelectedItem().toString() + ".");
             } catch (Exception ex) {
                 Mensaje.setText(Mensaje.getText() + "A.Motores: " +  "No conectado.");
@@ -981,6 +1216,97 @@ public class Ventana extends javax.swing.JFrame {
         vg.setVisible(true);
     }//GEN-LAST:event_botonGraficarActionPerformed
 
+    private void botonModoManualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModoManualActionPerformed
+        modoManual = 0;
+        cv.disableButton(botonModoManual );
+        cv.enableButton(botonAutomatico);
+        cv.enableButton(botonAbrirC);
+        cv.enableButton(botonAbrirR);
+        cv.enableButton(botonAbrirVL);
+        cv.enableButton(botonAbrirVS);
+        cv.enableButton(botonAbrirVen);
+        cv.enableButton(botonCerrarC);
+        cv.enableButton(botonCerrarR);
+        cv.enableButton(botonCerrarVL);
+        cv.enableButton(botonCerrarVS);
+        cv.enableButton(botonCerrarVen);
+    }//GEN-LAST:event_botonModoManualActionPerformed
+
+    private void botonAutomaticoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAutomaticoActionPerformed
+        modoManual = 1;
+        cv.disableButton(botonAutomatico);
+        cv.enableButton(botonModoManual);
+        cv.disableButton(botonAbrirC);
+        cv.disableButton(botonAbrirR);
+        cv.disableButton(botonAbrirVL);
+        cv.disableButton(botonAbrirVS);
+        cv.disableButton(botonAbrirVen);
+        cv.disableButton(botonCerrarC);
+        cv.disableButton(botonCerrarR);
+        cv.disableButton(botonCerrarVL);
+        cv.disableButton(botonCerrarVS);
+        cv.disableButton(botonCerrarVen);
+    }//GEN-LAST:event_botonAutomaticoActionPerformed
+
+    private void botonAbrirCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAbrirCActionPerformed
+        try {
+            ArduinoMotor.sendData("0");
+        } catch (ArduinoException | SerialPortException ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botonAbrirCActionPerformed
+
+    private void botonCerrarCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarCActionPerformed
+        try {
+            ArduinoMotor.sendData("1");
+        } catch (ArduinoException | SerialPortException ex) {
+            Logger.getLogger(Ventana.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_botonCerrarCActionPerformed
+
+    private void botonAbrirVenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAbrirVenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAbrirVenActionPerformed
+
+    private void botonCerrarVenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarVenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCerrarVenActionPerformed
+
+    private void botonAbrirRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAbrirRActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAbrirRActionPerformed
+
+    private void botonCerrarRActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarRActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCerrarRActionPerformed
+
+    private void botonAbrirVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAbrirVLActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAbrirVLActionPerformed
+
+    private void botonCerrarVLActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarVLActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCerrarVLActionPerformed
+
+    private void botonAbrirVSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAbrirVSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonAbrirVSActionPerformed
+
+    private void botonCerrarVSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCerrarVSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonCerrarVSActionPerformed
+
+    private void botonGuardarDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarDatosActionPerformed
+            String hora = ad.getHoraActual();
+            etiquetaHora.setText(hora);
+            Datos datos = new Datos();
+            
+            datos.tempMax = im.temp;
+            datos.humMax = im.hum;
+            datos.luzMax = im.luz;
+            ad.guardarDatos(datos);
+    }//GEN-LAST:event_botonGuardarDatosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1068,13 +1394,31 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JLabel VelocidadTexto;
     private javax.swing.JTextField VelocidadValor;
     private javax.swing.JLabel VientoTexto;
+    private javax.swing.JButton botonAbrirC;
+    private javax.swing.JButton botonAbrirR;
+    private javax.swing.JButton botonAbrirVL;
+    private javax.swing.JButton botonAbrirVS;
+    private javax.swing.JButton botonAbrirVen;
+    private javax.swing.JButton botonAutomatico;
+    private javax.swing.JButton botonCerrarC;
+    private javax.swing.JButton botonCerrarR;
+    private javax.swing.JButton botonCerrarVL;
+    private javax.swing.JButton botonCerrarVS;
+    private javax.swing.JButton botonCerrarVen;
     private javax.swing.JButton botonGraficar;
+    private javax.swing.JButton botonGuardarDatos;
+    private javax.swing.JButton botonModoManual;
     public javax.swing.JLabel etiquetaHora;
     public javax.swing.JComboBox<String> horaGuardar;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JTabbedPane jTabbedPane1;
     // End of variables declaration//GEN-END:variables
 }
