@@ -6,10 +6,12 @@
 #define temp2 2
 #define temp3 3// puertos digitales para sensores de temperatura y humedad
 
-DHT st0(DTHPIN, DTHTYPE); 
-DHT st1(DTHPIN, DTHTYPE); 
-DHT st2(DTHPIN, DTHTYPE); 
-DHT st3(DTHPIN, DTHTYPE);// declaracion de las variables del sensor de temperatura y humedad 
+#define DHTTYPE DHT11
+
+DHT st0(temp0, DTHTYPE); 
+DHT st1(temp1, DTHTYPE); 
+DHT st2(temp2, DTHTYPE); 
+DHT st3(temp3, DTHTYPE);// declaracion de las variables del sensor de temperatura y humedad 
 
 BH1750FVI ls0; //declaracion de las variables del sensor de luz
 BH1750FVI ls1;
